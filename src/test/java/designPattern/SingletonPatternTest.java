@@ -1,6 +1,5 @@
 package designPattern;
 
-import designPattern.singletonPattern.SingletonTest;
 import org.junit.Test;
 
 import java.util.Random;
