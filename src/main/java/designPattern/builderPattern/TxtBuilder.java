@@ -10,7 +10,10 @@ import java.util.Map;
  * @Date 2021/4/29
  **/
 public class TxtBuilder implements Builder {
-
+    /**
+     * 定义一个承载结果的容器
+     * 在其他场景中可以是复杂的产品VO对象等
+     */
     private final StringBuffer buffer = new StringBuffer();
 
     public void buildHeader(ExportHeaderModel exportHeaderModel) {

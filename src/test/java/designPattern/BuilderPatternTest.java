@@ -35,9 +35,11 @@ public class BuilderPatternTest {
         ExportFooterModel footer = new ExportFooterModel();
         footer.setExportUser("王狗子");
 
+        //将需求的生成器子类通过construct方法入口进行构建
         TxtBuilder txtBuilder = new TxtBuilder();
         Director director = new Director(txtBuilder);
         director.construct(header, bodyData, footer);
+        //director只是做了中转，具体的结果还是需要通过实际的生成器实现类返回
         System.out.println(txtBuilder.getResult().toString());
 
         XmlBuilder xmlBuilder = new XmlBuilder();
