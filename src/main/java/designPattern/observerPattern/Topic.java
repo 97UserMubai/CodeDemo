@@ -37,4 +37,8 @@ public abstract class Topic {
     public void notify(String newState) {
         observers.forEach(observer -> observer.update(newState));
     }
+
+    public void notifyPull(){
+        observers.forEach(observer -> observer.updatePull(this));
+    }
 }

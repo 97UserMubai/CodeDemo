@@ -28,4 +28,12 @@ public class ConcreteObserverOne implements Observer {
         this.observerState = state;
         System.out.println("状态更新成功，当前状态为：" + observerState);
     }
+
+    @Override
+    public void updatePull(Topic topic) {
+        ConcreteTopic concreteTopic = (ConcreteTopic) topic;
+        System.out.println("被通知需要更新状态，当前状态为：" + observerState);
+        this.observerState = concreteTopic.getState();
+        System.out.println("状态更新成功，当前状态为：" + observerState);
+    }
 }

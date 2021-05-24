@@ -1,6 +1,9 @@
 package designPattern;
 
-import designPattern.observerPattern.*;
+import designPattern.observerPattern.ConcreteObserverOne;
+import designPattern.observerPattern.ConcreteObserverTwo;
+import designPattern.observerPattern.ConcreteTopic;
+import designPattern.observerPattern.Observer;
 import org.junit.Test;
 
 /**
@@ -20,5 +23,8 @@ public class ObserverPatternTest {
         topic.change("这是一个新状态");
         topic.delete(observerTwo);
         topic.change("这是一个更新的状态");
+        System.out.println("下面使用pull模式\n");
+        topic.add(observerTwo);
+        topic.changePull("我是拉模式");
     }
 }

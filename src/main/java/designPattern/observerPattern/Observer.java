@@ -13,4 +13,10 @@ public interface Observer {
      * @param state 主题推送的新状态
      */
     void update(String state);
+
+    /**
+     * 拉模式更新
+     * @param topic 主题
+     */
+    void updatePull(Topic topic);
 }

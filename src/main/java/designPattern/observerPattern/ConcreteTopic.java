@@ -9,6 +9,10 @@ package designPattern.observerPattern;
 public class ConcreteTopic extends Topic {
     private String state;
 
+    public String getState() {
+        return state;
+    }
+
     /**
      * 变更同时，进行父通知接口的调用
      *
@@ -18,5 +22,11 @@ public class ConcreteTopic extends Topic {
         this.state = newState;
         System.out.println("主题状态变更为：" + state);
         this.notify(state);
+    }
+
+    public void changePull(String newState) {
+        this.state = newState;
+        System.out.println("主题状态变更为：" + state);
+        this.notifyPull();
     }
 }
