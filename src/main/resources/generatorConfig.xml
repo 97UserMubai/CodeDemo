@@ -8,7 +8,7 @@
     <!--<properties resource="./generator.properties"></properties>-->
 
     <!--指定特定数据库的jdbc驱动jar包的位置-->
-    <classPathEntry location="D:\soft\mysql-connector-java-8.0.21\mysql-connector-java-8.0.21.jar"/>
+    <classPathEntry location="E:\package\mysql-connector-java-8.0.21\mysql-connector-java-8.0.21.jar"/>
 
     <context id="default" targetRuntime="MyBatis3">
 
@@ -21,9 +21,9 @@
         <!--jdbc的数据库连接 -->
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://url/dbname"
-                        userId="username"
-                        password="password">
+                        connectionURL="jdbc:mysql://10.0.110.69:3308/safm_ipsm_master_standard"
+                        userId="root"
+                        password="123456">
         </jdbcConnection>
 
 
@@ -69,6 +69,6 @@
         <!--tableName:指定了表名
             domainObjectName:指定了实体类的名称
         -->
-<!--        <table tableName="xx" domainObjectName="xx"/>-->
+        <table tableName="safm_ipsm_sys_device_alarm_info" domainObjectName="DeviceAlarmInfo"/>
     </context>
 </generatorConfiguration>

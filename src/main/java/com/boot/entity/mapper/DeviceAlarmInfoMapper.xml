@@ -1,0 +1,2608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.entity.mapper.DeviceAlarmInfoMapper">
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="INTEGER" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=INTEGER}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=INTEGER},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=INTEGER},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=INTEGER},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=INTEGER},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <result column="PK_Rcrd_ID" jdbcType="BIGINT" property="pkRcrdId" />
+    <result column="Inst_Tree_Nm_Cmnt_Dsc" jdbcType="VARCHAR" property="instTreeNmCmntDsc" />
+    <result column="Mst_Ind" jdbcType="VARCHAR" property="mstInd" />
+    <result column="DISP_RULE_NM" jdbcType="VARCHAR" property="dispRuleNm" />
+    <result column="Alrm_TpCd" jdbcType="VARCHAR" property="alrmTpcd" />
+    <result column="Alct_Mode" jdbcType="VARCHAR" property="alctMode" />
+    <result column="Mon_Pnt_Nm" jdbcType="VARCHAR" property="monPntNm" />
+    <result column="Valt_Tot_Tm" jdbcType="INTEGER" property="valtTotTm" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn_ID" jdbcType="VARCHAR" property="udtPsnId" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PK_Rcrd_ID, Inst_Tree_Nm_Cmnt_Dsc, Mst_Ind, DISP_RULE_NM, Alrm_TpCd, Alct_Mode, Mon_Pnt_Nm, 
+    Valt_Tot_Tm, Crt_Psn, Crt_Tm, Udt_Psn_ID, Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (PK_Rcrd_ID, Inst_Tree_Nm_Cmnt_Dsc, Mst_Ind, 
+      DISP_RULE_NM, Alrm_TpCd, Alct_Mode, 
+      Mon_Pnt_Nm, Valt_Tot_Tm, Crt_Psn, 
+      Crt_Tm, Udt_Psn_ID, Udt_Tm, 
+      Del_Idr)
+    values (#{pkRcrdId,jdbcType=BIGINT}, #{instTreeNmCmntDsc,jdbcType=VARCHAR}, #{mstInd,jdbcType=VARCHAR}, 
+      #{dispRuleNm,jdbcType=VARCHAR}, #{alrmTpcd,jdbcType=VARCHAR}, #{alctMode,jdbcType=VARCHAR}, 
+      #{monPntNm,jdbcType=VARCHAR}, #{valtTotTm,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsnId,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkRcrdId != null">
+        PK_Rcrd_ID,
+      </if>
+      <if test="instTreeNmCmntDsc != null">
+        Inst_Tree_Nm_Cmnt_Dsc,
+      </if>
+      <if test="mstInd != null">
+        Mst_Ind,
+      </if>
+      <if test="dispRuleNm != null">
+        DISP_RULE_NM,
+      </if>
+      <if test="alrmTpcd != null">
+        Alrm_TpCd,
+      </if>
+      <if test="alctMode != null">
+        Alct_Mode,
+      </if>
+      <if test="monPntNm != null">
+        Mon_Pnt_Nm,
+      </if>
+      <if test="valtTotTm != null">
+        Valt_Tot_Tm,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsnId != null">
+        Udt_Psn_ID,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkRcrdId != null">
+        #{pkRcrdId,jdbcType=BIGINT},
+      </if>
+      <if test="instTreeNmCmntDsc != null">
+        #{instTreeNmCmntDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="mstInd != null">
+        #{mstInd,jdbcType=VARCHAR},
+      </if>
+      <if test="dispRuleNm != null">
+        #{dispRuleNm,jdbcType=VARCHAR},
+      </if>
+      <if test="alrmTpcd != null">
+        #{alrmTpcd,jdbcType=VARCHAR},
+      </if>
+      <if test="alctMode != null">
+        #{alctMode,jdbcType=VARCHAR},
+      </if>
+      <if test="monPntNm != null">
+        #{monPntNm,jdbcType=VARCHAR},
+      </if>
+      <if test="valtTotTm != null">
+        #{valtTotTm,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsnId != null">
+        #{udtPsnId,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkRcrdId != null">
+        PK_Rcrd_ID = #{record.pkRcrdId,jdbcType=BIGINT},
+      </if>
+      <if test="record.instTreeNmCmntDsc != null">
+        Inst_Tree_Nm_Cmnt_Dsc = #{record.instTreeNmCmntDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mstInd != null">
+        Mst_Ind = #{record.mstInd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dispRuleNm != null">
+        DISP_RULE_NM = #{record.dispRuleNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alrmTpcd != null">
+        Alrm_TpCd = #{record.alrmTpcd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alctMode != null">
+        Alct_Mode = #{record.alctMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monPntNm != null">
+        Mon_Pnt_Nm = #{record.monPntNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valtTotTm != null">
+        Valt_Tot_Tm = #{record.valtTotTm,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsnId != null">
+        Udt_Psn_ID = #{record.udtPsnId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set PK_Rcrd_ID = #{record.pkRcrdId,jdbcType=BIGINT},
+      Inst_Tree_Nm_Cmnt_Dsc = #{record.instTreeNmCmntDsc,jdbcType=VARCHAR},
+      Mst_Ind = #{record.mstInd,jdbcType=VARCHAR},
+      DISP_RULE_NM = #{record.dispRuleNm,jdbcType=VARCHAR},
+      Alrm_TpCd = #{record.alrmTpcd,jdbcType=VARCHAR},
+      Alct_Mode = #{record.alctMode,jdbcType=VARCHAR},
+      Mon_Pnt_Nm = #{record.monPntNm,jdbcType=VARCHAR},
+      Valt_Tot_Tm = #{record.valtTotTm,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn_ID = #{record.udtPsnId,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.boot.entity.DeviceAlarmInfo">
+    <id column="pkId" jdbcType="BIGINT" property="pkid" />
+    <result column="treeKey" jdbcType="VARCHAR" property="treekey" />
+    <result column="deviceId" jdbcType="BIGINT" property="deviceid" />
+    <result column="ruleId" jdbcType="VARCHAR" property="ruleid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="hTime" jdbcType="INTEGER" property="htime" />
+    <result column="Crt_Psn" jdbcType="VARCHAR" property="crtPsn" />
+    <result column="Crt_Tm" jdbcType="TIMESTAMP" property="crtTm" />
+    <result column="Udt_Psn" jdbcType="VARCHAR" property="udtPsn" />
+    <result column="Udt_Tm" jdbcType="TIMESTAMP" property="udtTm" />
+    <result column="Del_Idr" jdbcType="CHAR" property="delIdr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pkId, treeKey, deviceId, ruleId, type, mode, name, hTime, Crt_Psn, Crt_Tm, Udt_Psn, 
+    Udt_Tm, Del_Idr
+  </sql>
+  <select id="selectByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from safm_ipsm_sys_device_alarm_info
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample">
+    delete from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info (pkId, treeKey, deviceId, 
+      ruleId, type, mode, 
+      name, hTime, Crt_Psn, 
+      Crt_Tm, Udt_Psn, Udt_Tm, 
+      Del_Idr)
+    values (#{pkid,jdbcType=BIGINT}, #{treekey,jdbcType=VARCHAR}, #{deviceid,jdbcType=BIGINT}, 
+      #{ruleid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{htime,jdbcType=INTEGER}, #{crtPsn,jdbcType=VARCHAR}, 
+      #{crtTm,jdbcType=TIMESTAMP}, #{udtPsn,jdbcType=VARCHAR}, #{udtTm,jdbcType=TIMESTAMP}, 
+      #{delIdr,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    insert into safm_ipsm_sys_device_alarm_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        pkId,
+      </if>
+      <if test="treekey != null">
+        treeKey,
+      </if>
+      <if test="deviceid != null">
+        deviceId,
+      </if>
+      <if test="ruleid != null">
+        ruleId,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="htime != null">
+        hTime,
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn,
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm,
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn,
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm,
+      </if>
+      <if test="delIdr != null">
+        Del_Idr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pkid != null">
+        #{pkid,jdbcType=BIGINT},
+      </if>
+      <if test="treekey != null">
+        #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        #{delIdr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boot.entity.DeviceAlarmInfoExample" resultType="java.lang.Integer">
+    select count(*) from safm_ipsm_sys_device_alarm_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="record.pkid != null">
+        pkId = #{record.pkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.treekey != null">
+        treeKey = #{record.treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceid != null">
+        deviceId = #{record.deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleid != null">
+        ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.htime != null">
+        hTime = #{record.htime,jdbcType=INTEGER},
+      </if>
+      <if test="record.crtPsn != null">
+        Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTm != null">
+        Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.udtPsn != null">
+        Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.udtTm != null">
+        Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delIdr != null">
+        Del_Idr = #{record.delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update safm_ipsm_sys_device_alarm_info
+    set pkId = #{record.pkid,jdbcType=BIGINT},
+      treeKey = #{record.treekey,jdbcType=VARCHAR},
+      deviceId = #{record.deviceid,jdbcType=BIGINT},
+      ruleId = #{record.ruleid,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      mode = #{record.mode,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      hTime = #{record.htime,jdbcType=INTEGER},
+      Crt_Psn = #{record.crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{record.crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{record.udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{record.udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{record.delIdr,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    <set>
+      <if test="treekey != null">
+        treeKey = #{treekey,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceid != null">
+        deviceId = #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="ruleid != null">
+        ruleId = #{ruleid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="htime != null">
+        hTime = #{htime,jdbcType=INTEGER},
+      </if>
+      <if test="crtPsn != null">
+        Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTm != null">
+        Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udtPsn != null">
+        Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="udtTm != null">
+        Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delIdr != null">
+        Del_Idr = #{delIdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boot.entity.DeviceAlarmInfo">
+    update safm_ipsm_sys_device_alarm_info
+    set treeKey = #{treekey,jdbcType=VARCHAR},
+      deviceId = #{deviceid,jdbcType=BIGINT},
+      ruleId = #{ruleid,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      mode = #{mode,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      hTime = #{htime,jdbcType=INTEGER},
+      Crt_Psn = #{crtPsn,jdbcType=VARCHAR},
+      Crt_Tm = #{crtTm,jdbcType=TIMESTAMP},
+      Udt_Psn = #{udtPsn,jdbcType=VARCHAR},
+      Udt_Tm = #{udtTm,jdbcType=TIMESTAMP},
+      Del_Idr = #{delIdr,jdbcType=CHAR}
+    where pkId = #{pkid,jdbcType=BIGINT}
+  </update>
+</mapper>
