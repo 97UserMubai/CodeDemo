@@ -59,6 +59,7 @@ public class EasypoiTest {
             List<ExcelExportEntity> colList = new ArrayList<>();
             ExcelExportEntity colEntity = new ExcelExportEntity("ID", "id");
             colEntity.setNeedMerge(false);
+            colEntity.setWidth(20D);
             colList.add(colEntity);
 
             //获取最高层级
@@ -66,11 +67,19 @@ public class EasypoiTest {
 
             //进行行内容加工
             List<Map<String, Object>> list = new ArrayList<>();
-            entities.forEach(entity -> dealResultMap(entity, list));
+
+            entities.forEach(entity -> {
+                Map<String, Object> valMap = new HashMap<>();
+                //先处理默认第一层
+                valMap.put("id", entity.getId());
+                valMap.put("level" + entity.getLevel(), entity.getName());
+                dealResultMap(entity, list,valMap);
+            });
 
             Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams(), colList,
                     list);
-            FileOutputStream fos = new FileOutputStream("D:/树结构.xls");
+            String name = "树结构"+System.currentTimeMillis();
+            FileOutputStream fos = new FileOutputStream("D:/"+name+".xls");
             workbook.write(fos);
             fos.close();
         } catch (IOException e) {
@@ -81,14 +90,21 @@ public class EasypoiTest {
     /**
      * 递归处理导出excel的map数据
      */
-    private void dealResultMap(ExcelTestEntity entity, List<Map<String, Object>> list) {
-        //先处理默认第一层
-        Map<String, Object> valMap = new HashMap<>();
-        valMap.put("id", entity.getId());
-        valMap.put("level" + entity.getLevel(), entity.getName());
-        list.add(valMap);
+    private void dealResultMap(ExcelTestEntity entity, List<Map<String, Object>> list,Map<String, Object> valMap) {
+        /*
+        * 默认进行第二层的数据加工，加工逻辑如下;
+        * ①如果存在子节点，则获取子节点的第一个元素，添加到当前的valueMap中，否则则添加到最后的结果list中
+        * */
         if (Objects.nonNull(entity.getChildren()) && !entity.getChildren().isEmpty()) {
-            entity.getChildren().forEach(children -> dealResultMap(children, list));
+            List<ExcelTestEntity> innerEntities = entity.getChildren();
+            //拿出第一个子节点
+            ExcelTestEntity first = innerEntities.get(0);
+            //进行当前行数的赋值
+            valMap.put("level" + first.getLevel(), first.getName());
+            innerEntities.remove(first);
+            innerEntities.forEach(children->dealResultMap(children, list,valMap));
+        }else{
+            list.add(valMap);
         }
     }
 
