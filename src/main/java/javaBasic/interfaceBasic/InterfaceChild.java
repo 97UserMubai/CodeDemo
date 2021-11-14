@@ -1,4 +1,4 @@
-package javaBasic.interfaceTest;
+package javaBasic.interfaceBasic;
 
 /**
  * @name: InterfaceChild

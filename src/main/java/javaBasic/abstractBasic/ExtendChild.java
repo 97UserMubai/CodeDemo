@@ -1,4 +1,4 @@
-package javaBasic.abstractTest;
+package javaBasic.abstractBasic;
 
 /**
  * @name: ExtendChild
