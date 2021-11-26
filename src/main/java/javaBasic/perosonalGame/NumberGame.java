@@ -46,6 +46,12 @@ import java.util.stream.Collectors;
  *     1、每次比较的结果记录到表，得到比较趋势
  *     2、todo 这里保留其他扩展项
  * </pre>
+ *
+ * <pre>
+ *     编码日志：
+ *     1、2021-11-23 完成基础代码输入输出的编写
+ *     2、2021-11-25 集成数据库表，保证历史数据保持不变
+ * </pre>
  */
 public class NumberGame {
     public static void main(String[] args) {
@@ -55,6 +61,7 @@ public class NumberGame {
             value.forEach(i -> System.out.print(i + "\t"));
             System.out.println();
         });
+        //默认最后一轮数字等于最近一次的结果
         System.out.println("开始计算预测->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         //获取最优解
         List<Integer> finalNum = calcBestNumber(arr);
@@ -96,7 +103,7 @@ public class NumberGame {
         List<Integer> result = new ArrayList<>();
         defaultMap.forEach((key, value) -> {
             System.out.print("第" + key + "位近20位过滤数字:");
-            value.forEach(System.out::print);
+            value.forEach(number -> System.out.print(number + "\t"));
             System.out.println();
             if (value.size() == 1) {
                 result.add(value.get(0));
