@@ -1,6 +1,6 @@
-package com.boot.test.mapper;
+package com.boot.mapper;
 
-import com.boot.test.entity.NumberRecord;
+import com.boot.entity.NumberRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

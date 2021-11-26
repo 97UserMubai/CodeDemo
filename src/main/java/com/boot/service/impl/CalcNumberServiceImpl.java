@@ -1,15 +1,23 @@
-package javaBasic.perosonalGame;
+package com.boot.service.impl;
+
+import com.boot.entity.NumberRecord;
+import com.boot.param.RecordParam;
+import com.boot.service.ICalcNumberService;
+import com.boot.service.INumberRecordService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @name: NumberGame
+ * @name: CalcNumberServiceImpl
  * @author: mubai.
- * @date: 2021/11/23
+ * @date: 2021/11/26
  * @version: 1.0
- * @description:
- * <pre>
+ * @description: <pre>
  *     市面上流行的数字游戏玩法:
  *     1、array[20][5]，每轮游戏由5个数字组成，每次录入最新的20轮游戏
  *     2、每回合根据20轮的数字，比较得到最优结果：
@@ -54,20 +62,66 @@ import java.util.stream.Collectors;
  *     2、2021-11-25 集成数据库表，保证历史数据保持不变
  * </pre>
  */
-public class NumberGame {
-    public static void main(String[] args) {
-        System.out.println("当前随机数->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+@Service
+@Slf4j
+public class CalcNumberServiceImpl implements ICalcNumberService {
+    @Autowired
+    private INumberRecordService iNumberRecordService;
+
+    /**
+     * 进行最新记录存储
+     *
+     * @param recordParam 入参
+     * @return 存储结果
+     */
+    @Override
+    public String saveRecord(RecordParam recordParam) {
+        NumberRecord numberRecord = new NumberRecord();
+        BeanUtils.copyProperties(recordParam, numberRecord);
+        numberRecord.setYsNum(calcQy(numberRecord));
+        iNumberRecordService.save(numberRecord);
+        return "存储成功";
+    }
+
+    /**
+     * 预测结果
+     *
+     * @return 返回结果字符串
+     */
+    @Override
+    public String calcRecord() {
+        String result = "";
+        log.info("当前数据->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("");
         Map<Integer, List<Integer>> arr = getInitArray();
         arr.forEach((key, value) -> {
             value.forEach(i -> System.out.print(i + "\t"));
             System.out.println();
         });
         //默认最后一轮数字等于最近一次的结果
-        System.out.println("开始计算预测->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        log.info("开始计算预测->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("");
         //获取最优解
         List<Integer> finalNum = calcBestNumber(arr);
         finalNum.forEach(item -> System.out.print(item + "\t"));
         System.out.println();
+        return "";
+    }
+
+    /**
+     * 进行求余
+     *
+     * @param numberRecord 数据集
+     */
+    private Integer calcQy(NumberRecord numberRecord) {
+        int total = (numberRecord.getNum1() == 0 ? 10 : numberRecord.getNum1()) +
+                (numberRecord.getNum2() == 0 ? 10 : numberRecord.getNum2()) +
+                (numberRecord.getNum3() == 0 ? 10 : numberRecord.getNum3()) +
+                (numberRecord.getNum4() == 0 ? 10 : numberRecord.getNum4()) +
+                (numberRecord.getNum5() == 0 ? 10 : numberRecord.getNum5());
+        return total < (numberRecord.getNum1() == 0 || numberRecord.getNum2() == 0 ||
+                numberRecord.getNum3() == 0 || numberRecord.getNum4() == 0 || numberRecord.getNum5() == 0 ? 10 : 20)
+                ? null : total % 10;
     }
 
     /**
@@ -187,5 +241,4 @@ public class NumberGame {
         }
         return result;
     }
-
 }

@@ -1,14 +1,14 @@
-package com.boot.test.service.impl;
+package com.boot.service.impl;
 
-import com.boot.test.entity.NumberRecord;
-import com.boot.test.mapper.NumberRecordMapper;
-import com.boot.test.service.INumberRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.boot.entity.NumberRecord;
+import com.boot.mapper.NumberRecordMapper;
+import com.boot.service.INumberRecordService;
 import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author mubai
