@@ -1,15 +1,25 @@
-package javaBasic.perosonalGame;
+package com.boot.service.impl;
 
+import com.boot.entity.NumberRecord;
+import com.boot.mapper.NumberRecordMapper;
+import com.boot.param.RecordParam;
+import com.boot.service.ICalcNumberService;
+import com.boot.service.INumberRecordService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @name: NumberGame
+ * @name: CalcNumberServiceImpl
  * @author: mubai.
- * @date: 2021/11/23
+ * @date: 2021/11/26
  * @version: 1.0
- * @description:
- * <pre>
+ * @description: <pre>
  *     市面上流行的数字游戏玩法:
  *     1、array[20][5]，每轮游戏由5个数字组成，每次录入最新的20轮游戏
  *     2、每回合根据20轮的数字，比较得到最优结果：
@@ -45,7 +55,7 @@ import java.util.stream.Collectors;
  * <pre>
  *     后期扩展：
  *     1、每次比较的结果记录到表，得到比较趋势
- *     2、todo 这里保留其他扩展项
+ *     2、每次比较，需要根据累计比较次数，累计预测失败次数，过去30次数据中奇偶大小特性，给出一个倾向性选择
  * </pre>
  *
  * <pre>
@@ -54,62 +64,150 @@ import java.util.stream.Collectors;
  *     2、2021-11-25 集成数据库表，保证历史数据保持不变
  * </pre>
  */
-public class NumberGame {
-    public static void main(String[] args) {
-        System.out.println("当前随机数->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        Map<Integer, List<Integer>> arr = getInitArray();
-        arr.forEach((key, value) -> {
-            value.forEach(i -> System.out.print(i + "\t"));
-            System.out.println();
-        });
+@Service
+@Slf4j
+public class CalcNumberServiceImpl implements ICalcNumberService {
+    @Autowired
+    private INumberRecordService iNumberRecordService;
+    @Resource
+    private NumberRecordMapper numberRecordMapper;
+
+
+    /**
+     * 进行最新记录存储
+     *
+     * @param recordParam 入参
+     * @return 存储结果
+     */
+    @Override
+    public String saveRecord(RecordParam recordParam) {
+        NumberRecord numberRecord = new NumberRecord();
+        BeanUtils.copyProperties(recordParam, numberRecord);
+        numberRecord.setYsNum(calcQy(numberRecord));
+        iNumberRecordService.save(numberRecord);
+        return calcRecord();
+    }
+
+    /**
+     * 预测结果
+     *
+     * @return 返回结果字符串
+     */
+    @Override
+    public String calcRecord() {
+        List<NumberRecord> records = numberRecordMapper.getRecentNum();
+        log.info("当前数据->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        StringBuilder builder = new StringBuilder();
+        for (int i = records.size() - 1; i >= 0; i--) {
+            log.info("{}:{}\t{}\t{}\t{}\t{}", records.get(i).getRecordKey(), records.get(i).getNum1(),
+                    records.get(i).getNum2(), records.get(i).getNum3(), records.get(i).getNum4(), records.get(i).getNum5());
+            builder.append(records.get(i).getRecordKey()).append("：").append(records.get(i).getNum1()).append("    ")
+                    .append(records.get(i).getNum2()).append("    ")
+                    .append(records.get(i).getNum3()).append("    ")
+                    .append(records.get(i).getNum4()).append("    ")
+                    .append(records.get(i).getNum5()).append("\n");
+        }
         //默认最后一轮数字等于最近一次的结果
-        System.out.println("开始计算预测->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        log.info("开始计算预测->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         //获取最优解
-        List<Integer> finalNum = calcBestNumber(arr);
-        finalNum.forEach(item -> System.out.print(item + "\t"));
-        System.out.println();
+        List<Integer> finalNum = calcBestNumber(records, builder);
+        builder.append(" calc result：");
+        finalNum.forEach(num -> builder.append(num).append("    "));
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    /**
+     * 进行求余
+     *
+     * @param numberRecord 数据集
+     */
+    private Integer calcQy(NumberRecord numberRecord) {
+        int total = (numberRecord.getNum1() == 0 ? 10 : numberRecord.getNum1()) +
+                (numberRecord.getNum2() == 0 ? 10 : numberRecord.getNum2()) +
+                (numberRecord.getNum3() == 0 ? 10 : numberRecord.getNum3()) +
+                (numberRecord.getNum4() == 0 ? 10 : numberRecord.getNum4()) +
+                (numberRecord.getNum5() == 0 ? 10 : numberRecord.getNum5());
+        return total < (numberRecord.getNum1() == 0 || numberRecord.getNum2() == 0 ||
+                numberRecord.getNum3() == 0 || numberRecord.getNum4() == 0 || numberRecord.getNum5() == 0 ? 10 : 20)
+                ? null : total % 10;
     }
 
     /**
      * 获取最小结果
      *
-     * @param arr 过去20轮结果
+     * @param records 过去20轮结果
      * @return 最优解
      */
-    public static List<Integer> calcBestNumber(Map<Integer, List<Integer>> arr) {
+    public static List<Integer> calcBestNumber(List<NumberRecord> records, StringBuilder builder) {
         /*
          * 倒序进行运算
          */
         Map<Integer, List<Integer>> defaultMap = getDefaultNumberMap();
-        for (int i = 19; i >= 0; i--) {
-            //逆序获取集合
-            List<Integer> tempList = arr.get(i);
+        for (NumberRecord record : records) {
             //去除defaultMap的数据
-            for (int j = 0; j < 5; j++) {
-                if (defaultMap.get(j).contains(tempList.get(j))) {
-                    List<Integer> temp = new ArrayList<>(defaultMap.get(j));
-                    temp.remove(tempList.get(j));
-                    defaultMap.put(j, temp);
-                }
+            if (defaultMap.get(0).contains(record.getNum1())) {
+                List<Integer> temp = new ArrayList<>(defaultMap.get(0));
+                temp.remove(record.getNum1());
+                defaultMap.put(0, temp);
+            }
+            if (defaultMap.get(1).contains(record.getNum2())) {
+                List<Integer> temp = new ArrayList<>(defaultMap.get(1));
+                temp.remove(record.getNum2());
+                defaultMap.put(1, temp);
+            }
+            if (defaultMap.get(2).contains(record.getNum3())) {
+                List<Integer> temp = new ArrayList<>(defaultMap.get(2));
+                temp.remove(record.getNum3());
+                defaultMap.put(2, temp);
+            }
+            if (defaultMap.get(3).contains(record.getNum4())) {
+                List<Integer> temp = new ArrayList<>(defaultMap.get(3));
+                temp.remove(record.getNum4());
+                defaultMap.put(3, temp);
+            }
+            if (defaultMap.get(4).contains(record.getNum5())) {
+                List<Integer> temp = new ArrayList<>(defaultMap.get(4));
+                temp.remove(record.getNum5());
+                defaultMap.put(4, temp);
             }
         }
         //遍历完成
-        return getFinalNumber(defaultMap, arr.get(19));
+        return getFinalNumber(defaultMap, records.get(0), builder);
     }
 
     /*
      * 获取最终结果
      */
-    public static List<Integer> getFinalNumber(Map<Integer, List<Integer>> defaultMap, List<Integer> lastNumber) {
+    public static List<Integer> getFinalNumber(Map<Integer, List<Integer>> defaultMap, NumberRecord record, StringBuilder builder) {
         List<Integer> result = new ArrayList<>();
         defaultMap.forEach((key, value) -> {
             System.out.print("第" + key + "位近20位过滤数字:");
-            value.forEach(number -> System.out.print(number + "\t"));
+            builder.append("第").append(key).append("位近20位过滤数字：");
+            value.forEach(number -> {
+                System.out.print(number + "\t");
+                builder.append(number).append("    ");
+            });
+            builder.append("\n");
             System.out.println();
             if (value.size() == 1) {
                 result.add(value.get(0));
             } else {
-                result.add(calcNumber(value, lastNumber.get(key)));
+                if (key == 0) {
+                    result.add(calcNumber(value, record.getNum1()));
+                }
+                if (key == 1) {
+                    result.add(calcNumber(value, record.getNum2()));
+                }
+                if (key == 2) {
+                    result.add(calcNumber(value, record.getNum3()));
+                }
+                if (key == 3) {
+                    result.add(calcNumber(value, record.getNum4()));
+                }
+                if (key == 4) {
+                    result.add(calcNumber(value, record.getNum5()));
+                }
             }
         });
         return result;
@@ -187,5 +285,4 @@ public class NumberGame {
         }
         return result;
     }
-
 }

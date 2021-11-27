@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.mapper.NumberRecordMapper">
+    <select id="getRecentNum" resultType="com.boot.entity.NumberRecord">
+        select * from wbt_number_record order by record_key desc limit 20
+    </select>
+</mapper>
