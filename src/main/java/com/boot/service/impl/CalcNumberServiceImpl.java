@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,7 @@ import java.util.stream.Collectors;
  *     后期扩展：
  *     1、每次比较的结果记录到表，得到比较趋势
  *     2、每次比较，需要根据累计比较次数，累计预测失败次数，过去30次数据中奇偶大小特性，给出一个倾向性选择
+ *     3、2021-11-27 扩展：对于近二十个数字没有出现的情况，需要在筛选奇偶大小特性之后根据距离当前最远的距离比较来获取结果
  * </pre>
  *
  * <pre>
@@ -96,6 +98,7 @@ public class CalcNumberServiceImpl implements ICalcNumberService {
     @Override
     public String calcRecord() {
         List<NumberRecord> records = numberRecordMapper.getRecentNum();
+        //获取最近一次查询结果
         log.info("当前数据->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         StringBuilder builder = new StringBuilder();
         for (int i = records.size() - 1; i >= 0; i--) {
@@ -229,8 +232,20 @@ public class CalcNumberServiceImpl implements ICalcNumberService {
             return getXuanxueNumber(begin, end, b);
         } else {
             //这里肯定大于1，所以返回随机值即可
+            List<Integer> tempNum = new ArrayList<>(defaultNum);
+            if (b) {
+                tempNum = defaultNum.stream().filter(item -> item % 2 == 1).collect(Collectors.toList());
+            } else {
+                tempNum = defaultNum.stream().filter(item -> item % 2 == 0).collect(Collectors.toList());
+            }
             Random random = new Random();
-            return defaultNum.get(random.nextInt(defaultNum.size() - 1));
+            if (tempNum.size() == 0) {
+                return defaultNum.get(random.nextInt(defaultNum.size() - 1));
+            }
+            if (tempNum.size() == 1) {
+                return tempNum.get(0);
+            }
+            return tempNum.get(random.nextInt(tempNum.size() - 1));
         }
     }
 
