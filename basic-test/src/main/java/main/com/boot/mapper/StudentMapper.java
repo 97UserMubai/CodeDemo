@@ -1,7 +1,7 @@
-package com.boot.mapper;
+package main.com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.boot.entity.Student;
+import main.com.boot.entity.Student;
 
 public interface StudentMapper extends BaseMapper<Student> {
 }

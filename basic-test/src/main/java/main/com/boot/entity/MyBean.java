@@ -1,4 +1,4 @@
-package com.boot.entity;
+package main.com.boot.entity;
 
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.boot.entity;
+package main.com.boot.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

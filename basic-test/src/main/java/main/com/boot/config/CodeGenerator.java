@@ -1,4 +1,4 @@
-package com.boot.config;
+package main.com.boot.config;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.generator.AutoGenerator;

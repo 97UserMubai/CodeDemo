@@ -1,4 +1,4 @@
-package com.boot.entity;
+package main.com.boot.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

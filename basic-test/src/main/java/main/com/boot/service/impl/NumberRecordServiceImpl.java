@@ -1,9 +1,9 @@
-package com.boot.service.impl;
+package main.com.boot.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.boot.entity.NumberRecord;
-import com.boot.mapper.NumberRecordMapper;
-import com.boot.service.INumberRecordService;
+import main.com.boot.entity.NumberRecord;
+import main.com.boot.mapper.NumberRecordMapper;
+import main.com.boot.service.INumberRecordService;
 import org.springframework.stereotype.Service;
 
 /**

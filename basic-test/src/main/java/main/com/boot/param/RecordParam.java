@@ -1,4 +1,4 @@
-package com.boot.param;
+package main.com.boot.param;
 
 import lombok.Data;
 

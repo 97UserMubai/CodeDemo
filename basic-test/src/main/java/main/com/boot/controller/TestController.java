@@ -1,7 +1,7 @@
-package com.boot.controller;
+package main.com.boot.controller;
 
-import com.boot.entity.Student;
-import com.boot.mapper.StudentMapper;
+import main.com.boot.entity.Student;
+import main.com.boot.mapper.StudentMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

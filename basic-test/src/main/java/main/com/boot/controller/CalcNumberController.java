@@ -1,7 +1,7 @@
-package com.boot.controller;
+package main.com.boot.controller;
 
-import com.boot.param.RecordParam;
-import com.boot.service.ICalcNumberService;
+import main.com.boot.param.RecordParam;
+import main.com.boot.service.ICalcNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

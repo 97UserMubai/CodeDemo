@@ -1,17 +1,16 @@
-package com.boot.service.impl;
+package main.com.boot.service.impl;
 
-import com.boot.entity.NumberRecord;
-import com.boot.mapper.NumberRecordMapper;
-import com.boot.param.RecordParam;
-import com.boot.service.ICalcNumberService;
-import com.boot.service.INumberRecordService;
+import main.com.boot.entity.NumberRecord;
+import main.com.boot.mapper.NumberRecordMapper;
+import main.com.boot.param.RecordParam;
+import main.com.boot.service.ICalcNumberService;
+import main.com.boot.service.INumberRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 

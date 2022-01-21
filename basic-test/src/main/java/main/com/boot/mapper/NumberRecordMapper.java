@@ -1,6 +1,6 @@
-package com.boot.mapper;
+package main.com.boot.mapper;
 
-import com.boot.entity.NumberRecord;
+import main.com.boot.entity.NumberRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
