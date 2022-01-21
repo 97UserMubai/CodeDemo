@@ -19,9 +19,12 @@ spring:
   datasource:
     #    驱动
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+#    url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+    url: jdbc:mysql://10.0.110.111:3306/wbt_test_master?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: pilot
+    password: Pilot@1234
 
 #控制台打印sql
 mybatis-plus:
