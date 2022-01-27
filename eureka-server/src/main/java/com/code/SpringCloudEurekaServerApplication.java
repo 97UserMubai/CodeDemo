@@ -1,4 +1,4 @@
-package main.java.com.code;
+package com.code;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

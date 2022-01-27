@@ -9,15 +9,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-  application:
-    name: userservice
-  cloud:
-    nacos:
-      discovery:
-        cluster-name: ZH  #集群名称配置
-        server-addr: localhost:8848  #nacos服务配置，localhost:8848也是默认配置
-        namespace: 774de642-9b92-4ca9-9e0a-a77739842f7d  #命名空间id
-        ephemeral: true #是否为临时实例，默认为true，非临时实例对服务器压力更大，默认是使用临时实例
 userservice:
   ribbon:
     NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule  #使用NacosRule配合集群模式优先选择同集群的规则
