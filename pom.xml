@@ -13,6 +13,8 @@
         <module>eureka-server</module>
         <module>basic-test</module>
         <module>user-service</module>
+        <module>order-service</module>
+        <module>common-content</module>
     </modules>
 
     <parent>
