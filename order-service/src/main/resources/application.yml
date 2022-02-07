@@ -9,6 +9,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/mytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
+  application:
+    name: orderservice
 userservice:
   ribbon:
     NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule  #使用NacosRule配合集群模式优先选择同集群的规则

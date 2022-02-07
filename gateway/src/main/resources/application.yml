@@ -1,0 +1,23 @@
+server:
+  port: 8088
+spring:
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: order-service   #路由Id,只需要保证唯一即可
+          uri: lb://orderservice  #路由的目标地址 ， lb表示负载均衡，后面跟着服务名称，通过注册中心获取对应的服务列表
+          predicates:
+            - Path=/order/**  #将order前缀的服务请求路由到orderservice
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      httpclient:
+        connect-timeout: 60000
+        response-timeout: 5s
+  application:
+    name: gateway-service
+
+
