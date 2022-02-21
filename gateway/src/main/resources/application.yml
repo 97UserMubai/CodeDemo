@@ -10,6 +10,9 @@ spring:
           uri: lb://orderservice  #路由的目标地址 ， lb表示负载均衡，后面跟着服务名称，通过注册中心获取对应的服务列表
           predicates:
             - Path=/order/**  #将order前缀的服务请求路由到orderservice
+          filters:
+            - AddRequestHeader=name, mubai  #路由过滤器，根据顺序，这里order = 1
+            - AddRequestHeader=age, 18  #路由过滤器，根据顺序，这里order = 2
       discovery:
         locator:
           enabled: true
@@ -17,6 +20,9 @@ spring:
       httpclient:
         connect-timeout: 60000
         response-timeout: 5s
+      default-filters:
+        - AddRequestHeader=name2, mubai2  #默认过滤器，根据顺序，这里order = 1
+        - AddRequestHeader=age2, 25  #默认过滤器，根据顺序，这里order = 2
   application:
     name: gateway-service
 
