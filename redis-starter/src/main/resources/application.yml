@@ -1,6 +1,6 @@
 spring:
   redis:
-    host: 127.0.0.1
+    host: 120.24.215.98
     port: 6379
     password: 123456  #密码，redis没有设置密码时默认为空
     jedis:
