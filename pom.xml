@@ -16,6 +16,7 @@
         <module>order-service</module>
         <module>common-content</module>
         <module>gateway</module>
+        <module>redis-starter</module>
     </modules>
 
     <parent>
@@ -141,6 +142,13 @@
                 <version>${alibaba.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+<!--            Fiber协程-->
+            <dependency>
+                <groupId>co.paralleluniverse</groupId>
+                <artifactId>quasar-core</artifactId>
+                <version>0.7.10</version>
+                <classifier>jdk8</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
