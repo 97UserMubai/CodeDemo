@@ -1,4 +1,4 @@
-package javaBasic.jdk8Basic;
+package javaBasic.jdk8Basic.function;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

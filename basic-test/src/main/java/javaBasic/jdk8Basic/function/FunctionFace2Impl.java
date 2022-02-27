@@ -1,4 +1,4 @@
-package javaBasic.jdk8Basic;
+package javaBasic.jdk8Basic.function;
 
 /**
  * @name: FunctionFace2Impl

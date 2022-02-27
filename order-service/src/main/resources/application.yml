@@ -6,9 +6,9 @@ spring:
   datasource:
     #    驱动
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.0.110.92:3306/wbt?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://120.24.215.98:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: Pilot@1234
+    password: wbt970326
   application:
     name: orderservice
 userservice:
