@@ -1,4 +1,4 @@
-package javaBasic.jdk8Basic.function.fibonacci;
+package javaBasic.jdk8Basic.function;
 
 /**
  * 定义一个接口函数，用于lambda函数实现递归处理

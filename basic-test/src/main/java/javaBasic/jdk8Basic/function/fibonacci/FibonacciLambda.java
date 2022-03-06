@@ -1,5 +1,7 @@
 package javaBasic.jdk8Basic.function.fibonacci;
 
+import javaBasic.jdk8Basic.function.IntCall;
+
 /**
  * 斐波那契函数的lambda实现过程
  */
