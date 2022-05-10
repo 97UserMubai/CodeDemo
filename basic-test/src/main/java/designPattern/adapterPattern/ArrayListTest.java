@@ -18,8 +18,10 @@ public class ArrayListTest {
         //输出1,2,4
         System.out.println(list);
         //输出数组下标越界异常
-        list.set(3, "5");
-        //抛出UnsupportedOperationException异常
+//        list.set(3, "5");
+        //抛出UnsupportedOpe
+        list.add("4");
+        // rationException异常
         list.remove(1);
     }
 

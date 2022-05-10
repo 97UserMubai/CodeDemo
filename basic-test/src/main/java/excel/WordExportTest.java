@@ -80,7 +80,7 @@ public class WordExportTest {
         valList.add(map);
 
         value.put("valList", valList);
-        XWPFDocument word = WordExportUtil.exportWord07("D:\\projects\\basic-test\\src\\main\\resources\\template\\test_tem.docx", colList);
+        XWPFDocument word = WordExportUtil.exportWord07("template/test_tem.docx", colList);
         FileOutputStream fos = new FileOutputStream("D:/ExcelExportTemplateColFeTest_one.docx");
         word.write(fos);
         fos.close();
