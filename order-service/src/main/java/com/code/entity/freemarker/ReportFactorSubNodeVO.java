@@ -1,4 +1,4 @@
-package excel.freemarker;
+package com.code.entity.freemarker;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,30 +7,15 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @name: CalcReportItemVO
+ * @name: ReportFactorSubNodeVO
  * @author: mubai.
  * @date: 2022/5/7
  * @version: 1.0
- * @description: 核算节点vo对象
+ * @description:
  */
 @Data
-@ApiModel(value = "CalcReportNodeVO", description = "报告核算边界节点vo对象")
-public class ReportNodeVO {
-
-    @ApiModelProperty("节点Id")
-    private String nodePkId;
-    @ApiModelProperty(value = "排放单位Id")
-    private String unitId;
-    @ApiModelProperty(value = "排放单位名称")
-    private String unitName;
-    @ApiModelProperty(value = "核算行业名称")
-    private String industryName;
-    @ApiModelProperty(value = "排放类型名称")
-    private String emissionTypeName;
-    @ApiModelProperty(value = "排放活动类型Id")
-    private String activityTypeId;
-    @ApiModelProperty(value = "排放活动名称")
-    private String activityTypeName;
+@ApiModel(value = "ReportFactorSubNodeVO", description = "报告排放因子子对象")
+public class ReportFactorSubNodeVO {
     @ApiModelProperty(value = "排放源Id")
     private String sourceId;
     @ApiModelProperty(value = "排放源名称")
@@ -48,5 +33,6 @@ public class ReportNodeVO {
 
     @ApiModelProperty("计算因子数据")
     private List<CalcResultDetailVo> factorDetails;
+
 
 }
