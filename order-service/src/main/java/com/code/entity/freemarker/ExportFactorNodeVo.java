@@ -38,11 +38,8 @@ import java.util.List;
 @Data
 @ApiModel(value = "ExportFactorNodeVo", description = "核算因子数据导出")
 public class ExportFactorNodeVo {
-    private String unitName;
+    private String unitFullName;
 
-    private String industryName;
+    private List<ExportFactorEmissionNodeVo> emissionNodeVos;
 
-    private List<ExportFactorDetailNodeVo> directDetailVos;
-
-    private List<ExportFactorDetailNodeVo> indirectDetailVos;
 }

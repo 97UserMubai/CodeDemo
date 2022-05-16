@@ -63,11 +63,32 @@ public class FreemarkerExport {
             boundaryVO.setIndirectSourceFullName("");
             params.put("boundary", boundaryVO);
             params.put("nodes", getExportNodes());
+            List<ExportFactorNodeVo> factorNodeVos = new ArrayList<>();
+            factorNodeVos.add(getFactorNodeVos("1"));
+            factorNodeVos.add(getFactorNodeVos("2"));
+            params.put("factorNodes", factorNodeVos);
             template.process(params, bufferWriter);
         } catch (Exception e) {
             System.out.println("发生异常");
             e.printStackTrace();
         }
+    }
+
+
+    private ExportFactorNodeVo getFactorNodeVos(String level) {
+        ExportFactorNodeVo nodeVo1 = new ExportFactorNodeVo();
+        nodeVo1.setUnitFullName(String.format("派诺科技园%s期-公共建筑运营行业(Test)", level));
+        List<ExportFactorEmissionNodeVo> emissionNodeVos = new ArrayList<>();
+        ExportFactorEmissionNodeVo emissionNodeVo = new ExportFactorEmissionNodeVo();
+        emissionNodeVo.setEmissionFullName("直接排放活动水平因子(Test)");
+        List<ExportFactorDetailNodeVo> directDetailNodes = new ArrayList<>();
+        ExportFactorDetailNodeVo detailNodeVo1 = new ExportFactorDetailNodeVo();
+        detailNodeVo1.setActivityTypeName("化石燃料燃烧排放(TEST)");
+        directDetailNodes.add(detailNodeVo1);
+        emissionNodeVo.setDetailVos(directDetailNodes);
+        emissionNodeVos.add(emissionNodeVo);
+        nodeVo1.setEmissionNodeVos(emissionNodeVos);
+        return nodeVo1;
     }
 
     private List<ExportNodeVo> getExportNodes() {
