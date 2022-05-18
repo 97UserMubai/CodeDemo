@@ -84,11 +84,45 @@ public class FreemarkerExport {
         List<ExportFactorDetailNodeVo> directDetailNodes = new ArrayList<>();
         ExportFactorDetailNodeVo detailNodeVo1 = new ExportFactorDetailNodeVo();
         detailNodeVo1.setActivityTypeName("化石燃料燃烧排放(TEST)");
+        List<Map<String, ExportFactorSubVo>> factorSubMap = new ArrayList<>();
+        factorSubMap.add(getHeaderFactorSubMap());
+        factorSubMap.add(getFormFactorSubMap());
+        detailNodeVo1.setSubVos(factorSubMap);
         directDetailNodes.add(detailNodeVo1);
         emissionNodeVo.setDetailVos(directDetailNodes);
         emissionNodeVos.add(emissionNodeVo);
         nodeVo1.setEmissionNodeVos(emissionNodeVos);
         return nodeVo1;
+    }
+
+    /**
+     * 获取因子节点表头数据map对象
+     */
+    private Map<String, ExportFactorSubVo> getHeaderFactorSubMap() {
+        Map<String, ExportFactorSubVo> subVoMap = new HashMap<>();
+        subVoMap.put("1", new ExportFactorSubVo("排放源", "3", "1"));
+        subVoMap.put("2", new ExportFactorSubVo("排放单元", "3", "1"));
+        subVoMap.put("3", new ExportFactorSubVo("排放设备", "3", "1"));
+        subVoMap.put("4", new ExportFactorSubVo("这是一个单位表头", "3", "1"));
+        subVoMap.put("5", new ExportFactorSubVo("消耗量的数据来源", "3", "1"));
+        subVoMap.put("6", new ExportFactorSubVo("一个因子", "3", "1"));
+        subVoMap.put("7", new ExportFactorSubVo("因子来源", "3", "1"));
+        return subVoMap;
+    }
+
+    /**
+     * 获取因子节点表单数据map对象
+     */
+    private Map<String, ExportFactorSubVo> getFormFactorSubMap() {
+        Map<String, ExportFactorSubVo> subVoMap = new HashMap<>();
+        subVoMap.put("1", new ExportFactorSubVo("嘿嘿天然气", "3", "1"));
+        subVoMap.put("2", new ExportFactorSubVo("呵呵单元", "3", "1"));
+        subVoMap.put("3", new ExportFactorSubVo("哈哈设备", "3", "1"));
+        subVoMap.put("4", new ExportFactorSubVo("999m³", "3", "1"));
+        subVoMap.put("5", new ExportFactorSubVo("测试呀", "3", "1"));
+        subVoMap.put("6", new ExportFactorSubVo("123", "3", "1"));
+        subVoMap.put("7", new ExportFactorSubVo("默认值", "3", "1"));
+        return subVoMap;
     }
 
     private List<ExportNodeVo> getExportNodes() {

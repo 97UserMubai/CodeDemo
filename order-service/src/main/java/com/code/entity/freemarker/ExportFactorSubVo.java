@@ -2,7 +2,9 @@ package com.code.entity.freemarker;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Classname ExportFactorSubVo
@@ -12,6 +14,8 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "ExportFactorNodeVo", description = "核算因子数据导出")
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExportFactorSubVo {
     @ApiModelProperty("单元格名称")
     private String name;
