@@ -24,6 +24,14 @@ import java.util.stream.Stream;
 public class SelfTest {
 
     @Test
+    public void test0702(){
+        double V= 5.2;
+        double V2= 5.0;
+        System.out.println(V%0.5 == 0);
+        System.out.println(V2%0.5 == 0);
+    }
+
+    @Test
     public void parseSpecialChar() {
         String str = "2AP/_空调";
         str = str.replace("//", "/");
