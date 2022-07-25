@@ -1,4 +1,4 @@
-package validate.exception;
+package com.code.validate.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

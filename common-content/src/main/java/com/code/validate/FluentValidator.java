@@ -1,6 +1,8 @@
-package validate;
+package com.code.validate;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.function.Function;
 
 /**
  * @Classname FluentValidator
@@ -43,8 +45,8 @@ public class FluentValidator {
      * @param <T>       验证对象泛型
      * @return FluentValidator对象
      */
-    public <T> FluentValidator on(Validator<T> validator) {
-        validatorElementList.add(new ValidatorElement(null, validator));
+    public <T> FluentValidator on(Validator<T> validator, Function<T, Boolean> function) {
+        validatorElementList.add(new ValidatorElement(null, validator, function));
         return this;
     }
 
@@ -56,8 +58,8 @@ public class FluentValidator {
      * @param <T>       验证对象泛型
      * @return FluentValidator对象
      */
-    public <T> FluentValidator on(T t, Validator<T> validator) {
-        validatorElementList.add(new ValidatorElement(t, validator));
+    public <T> FluentValidator on(T t, Validator<T> validator, Function<T, Boolean> function) {
+        validatorElementList.add(new ValidatorElement(t, validator, function));
         return this;
     }
 
@@ -71,9 +73,9 @@ public class FluentValidator {
      * @param <T>       验证对象泛型
      * @return FluentValidator对象
      */
-    public <T> FluentValidator on(T t, Validator<T> validator, boolean condition) {
+    public <T> FluentValidator on(T t, Validator<T> validator, Function<T, Boolean> function, boolean condition) {
         if (condition) {
-            validatorElementList.add(new ValidatorElement(t, validator));
+            validatorElementList.add(new ValidatorElement(t, validator, function));
         }
         return this;
     }
@@ -107,7 +109,7 @@ public class FluentValidator {
      */
     public FluentValidator doValidate() {
         if (validatorElementList.isEmpty()) {
-            log.info("Nothing need to validate");
+            log.info("Nothing need to com.code.validate");
             return null;
         }
         validatorElementList.getList().forEach(element -> {
@@ -115,7 +117,7 @@ public class FluentValidator {
             Validator validator = element.getValidator();
             String validatorName = validator.getClass().getSimpleName();
             log.info("{} is running", validatorName);
-            validator.validate(context, target);
+            validator.validate(context, target, element.getFunction());
         });
         return this;
     }
