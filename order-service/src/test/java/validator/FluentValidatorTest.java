@@ -50,7 +50,7 @@ public class FluentValidatorTest {
         FluentValidator fluentValidator = FluentValidator.checkAll()
                 .on(dbSql, new DbExistValidator<>(), key -> commonMapper.findExist(key))
                 .doValidate();
-        Object result = fluentValidator.getContext().getString(dbSql);
+        Boolean result = fluentValidator.getContext().getBoolean(dbSql);
         System.out.println(result);
     }
 
