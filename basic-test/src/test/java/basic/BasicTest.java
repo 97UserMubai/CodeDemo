@@ -18,6 +18,6 @@ public class BasicTest {
 
     @Test
     public void testPad() {
-
+        System.out.println("debug");
     }
 }
