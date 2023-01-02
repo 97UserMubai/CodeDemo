@@ -13,7 +13,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author: mubai.
  * @date: 2022/2/21
  * @version: 1.0
- * @description: 单机模式的redisConfig, 使用ConditionalOnProperty注解来就决定该配置类是否生效
+ * @description: <pre>
+ *     1.单机模式的redisConfig, 使用ConditionalOnProperty注解来就决定该配置类是否生效
+ *     2.除了基础配置之外，对外提供一些基本数据类型操作的对象，都来源于RedisTemplate的opsFor方法
+ * </pre>
  */
 @Configuration
 @ConditionalOnProperty(name = "spring.redis.mode", havingValue = "standAlone")
@@ -30,7 +33,7 @@ public class RedisStandAloneConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         //将连接工厂配置给redisTemplate实例
         template.setConnectionFactory(factory);
-        //序列化
+        //序列化，默认为string类型
         template.setKeySerializer(new StringRedisSerializer());
         return template;
     }

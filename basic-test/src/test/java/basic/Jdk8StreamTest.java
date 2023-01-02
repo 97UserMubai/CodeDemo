@@ -214,7 +214,7 @@ public class Jdk8StreamTest {
         //nonMatch相当于!or
         Stream<String> stream3 = Stream.of("ab", "ac", "bc");
         boolean isMatch3 = stream3.noneMatch(s -> s.contains("c"));
-        System.out.println("noneMatch:" + isMatch2);
+        System.out.println("noneMatch:" + isMatch3);
     }
 
     /**
