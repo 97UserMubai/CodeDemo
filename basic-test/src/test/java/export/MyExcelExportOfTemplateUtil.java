@@ -142,6 +142,7 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
                 mergedRegionHelper);
         Iterator<?> its = datas.iterator();
         int rowspan = (Integer) columnsInfo[0], colspan = (Integer) columnsInfo[1];
+        //这个位置将模板中的遍历目标的目标都进行组装，ExcelForEachParams 这个参数包含了合并单元格的rowSpan colSpan还有它的样式内容
         @SuppressWarnings("unchecked")
         List<ExcelForEachParams> columns = (List<ExcelForEachParams>) columnsInfo[2];
         Row row = null;
@@ -151,12 +152,14 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
         int loopSize = 0;
         if (its.hasNext()) {
             Object t = its.next();
+            //这个位置提前创建了行
             loopSize = setForeachRowCellValue(isCreate, cell.getRow(), cell.getColumnIndex(), t, columns, map,
                     rowspan, colspan, mergedRegionHelper)[0];
             rowIndex += rowspan - 1 + loopSize - 1;
         }
         //修复不论后面有没有数据,都应该执行的是插入操作
         if (isShift && datas.size() > 1 && datas.size() * rowspan > 1 && cell.getRowIndex() + rowspan <= cell.getRow().getSheet().getLastRowNum()) {
+            //进行的复制和创建
             int lastRowNum = cell.getRow().getSheet().getLastRowNum();
             int shiftRows = lastRowNum - cell.getRowIndex() - rowspan;
             cell.getRow().getSheet().shiftRows(cell.getRowIndex() + rowspan, lastRowNum, (datas.size() - 1) * rowspan, true, true);
@@ -167,6 +170,7 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
         while (its.hasNext()) {
             Object t = its.next();
             row = createRow(rowIndex, cell.getSheet(), isCreate, rowspan);
+            //这个位置才开始创建行，并合并单元格
             indexColumn.addConstValue(1);
             loopSize = setForeachRowCellValue(isCreate, row, cell.getColumnIndex(), t, columns, map, rowspan,
                     colspan, mergedRegionHelper)[0];
@@ -577,7 +581,7 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
                 cell.setCellValue("");
                 if (img.getRowspan() > 1 || img.getColspan() > 1) {
                     img.setHeight(0);
-                    PoiMergeCellUtil.addMergedRegion(cell.getSheet(), cell.getRowIndex(),
+                    addMergedRegion(cell.getSheet(), cell.getRowIndex(),
                             cell.getRowIndex() + img.getRowspan() - 1, cell.getColumnIndex(), cell.getColumnIndex() + img.getColspan() - 1);
                 }
                 createImageCell(cell, img.getHeight(), img.getRowspan(), img.getColspan(), img.getUrl(), img.getData());
@@ -637,7 +641,7 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
             mergeStr = mergeStr.replaceFirst(MERGE, "");
             try {
                 int colSpan = (int) Double.parseDouble(PoiPublicUtil.getRealValue(mergeStr, map).toString());
-                PoiMergeCellUtil.addMergedRegion(cell.getSheet(), cell.getRowIndex(),
+                addMergedRegion(cell.getSheet(), cell.getRowIndex(),
                         cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex() + colSpan - 1);
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
@@ -770,12 +774,14 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
                 //如果合并单元格,就把这个单元格的样式和之前的保持一致
                 setMergedRegionStyle(row, ci, params);
                 //合并对应单元格
-                boolean isNeedMerge = (params.getRowspan() != 1 || params.getColspan() != 1)
-                        && !mergedRegionHelper.isMergedRegion(row.getRowNum() + 1, ci);
+//                boolean isNeedMerge = (params.getRowspan() != 1 || params.getColspan() != 1)
+//                        && !mergedRegionHelper.isMergedRegion(row.getRowNum() + 1, ci);
+                //todo 这里多行遍历的时候缓存存在问题 ，不过取消掉之后可能存在性能问题,因为会频繁捕获到异常
+                boolean isNeedMerge = params.getRowspan() != 1 || params.getColspan() != 1;
                 // 这里感觉判断没有意义,有点浪费性能,还不如后面报错
                 //        && !PoiCellUtil.isMergedRegion(row.getSheet(), row.getRowNum(), ci);
                 if (isNeedMerge) {
-                    PoiMergeCellUtil.addMergedRegion(row.getSheet(), row.getRowNum(),
+                    addMergedRegion(row.getSheet(), row.getRowNum(),
                             row.getRowNum() + params.getRowspan() - 1, ci,
                             ci + params.getColspan() - 1);
                 }
@@ -805,11 +811,19 @@ public final class MyExcelExportOfTemplateUtil extends BaseExportService {
     private void handlerLoopMergedRegion(Row row, int columnIndex, List<ExcelForEachParams> columns, int loopSize) {
         for (int i = 0; i < columns.size(); i++) {
             if (!columns.get(i).isCollectCell()) {
-                PoiMergeCellUtil.addMergedRegion(row.getSheet(), row.getRowNum(),
+                addMergedRegion(row.getSheet(), row.getRowNum(),
                         row.getRowNum() + loopSize - 1, columnIndex,
                         columnIndex + columns.get(i).getColspan() - 1);
             }
             columnIndex = columnIndex + columns.get(i).getColspan();
+        }
+    }
+
+    public static void addMergedRegion(Sheet sheet, int firstRow, int lastRow, int firstCol, int lastCol) {
+        try {
+            sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
+        } catch (Exception e) {
+            //忽略掉异常
         }
     }
 
