@@ -3,6 +3,7 @@ package export;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.alibaba.fastjson.JSON;
+import com.aspose.cells.WorksheetCollection;
 import entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -70,14 +71,41 @@ public class EasyPoiTemplate {
     @Test
     public void testCloneManySheet() throws Exception {
         Map<Integer, List<Map<String, Object>>> sheetMap = new HashMap<>();
+        List<String> workbookPaths = new ArrayList<>();
+        TemplateExportParams params = new TemplateExportParams("D:\\projects\\CodeDemo\\basic-test\\src\\main\\resources\\template\\export\\WBT自定义报表2.xlsx");
         for (int i = 1; i <= 3; i++) {
-            sheetMap.put(i * 3 - 1, getCloneMap(i));
+            String fileName = "D:\\export\\many_sheet_" + System.currentTimeMillis() + ".xlsx";
+            FileOutputStream fos = new FileOutputStream(fileName);
+            Workbook workbook = ExcelExportUtil.exportExcel(params, getMap(i));
+            workbook.write(fos);
+            workbookPaths.add(fileName);
+            fos.close();
         }
-        TemplateExportParams params = new TemplateExportParams("D:\\projects\\CodeDemo\\basic-test\\src\\main\\resources\\template\\export\\WBT自定义报表.xlsx");
-        Workbook workbook = ExcelExportUtil.exportExcelClone(sheetMap, params);
-        FileOutputStream fos = new FileOutputStream("D:\\export\\many_sheet_" + System.currentTimeMillis() + ".xlsx");
-        workbook.write(fos);
-        fos.close();
+        //进行数据整合
+        //创建目标集合
+        com.aspose.cells.Workbook output = new com.aspose.cells.Workbook();
+        WorksheetCollection sheets = output.getWorksheets();
+
+        AtomicInteger index = new AtomicInteger(0);
+        workbookPaths.forEach(item -> {
+            try {
+                com.aspose.cells.Workbook input = new com.aspose.cells.Workbook(item);
+                //复制sheet
+                for (int i = 0; i <= 2; i++) {
+                    if (index.get() == 0) {
+                        sheets.get(index.getAndAdd(1)).copy(input.getWorksheets().get(i));
+                    } else {
+                        sheets.add(String.valueOf(index.getAndAdd(1))).copy(input.getWorksheets().get(i));
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("读取输入文件异常");
+                e.printStackTrace();
+            }
+        });
+        //加工完成进行文件的存储
+        String fileName = "D:\\export\\collector_sheet_" + System.currentTimeMillis() + ".xlsx";
+        output.save(fileName);
     }
 
     /**
@@ -88,13 +116,17 @@ public class EasyPoiTemplate {
      */
     private List<Map<String, Object>> getCloneMap(int index) {
         List<Map<String, Object>> list = new ArrayList<>();
+        list.add(getMap(index));
+        return list;
+    }
+
+    private Map<String, Object> getMap(int index) {
         Map<String, Object> map = new HashMap<>();
         map.put("B1D1628278085199470594I1539142773103087617V1T11:30", index);
         map.put("B1D1628223729586544643I1539142773103087617V1T11:30", index);
         map.put("B1D1628278085790867459I1539142773103087617V1T11:30", index);
         map.put("reportDate", LocalDate.now().plusDays(1).toString());
-        list.add(map);
-        return list;
+        return map;
     }
 
     private Workbook getFaultBaseWorkBook() {

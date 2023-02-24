@@ -172,8 +172,13 @@
 <!--            <artifactId>aspose-cells</artifactId>-->
 <!--            <version>8.2.1</version>-->
 <!--        </dependency>-->
-
-
+        <dependency>
+            <groupId>aspose-cells</groupId>
+            <artifactId>aspose-cells</artifactId>
+            <version>16.10.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/aspose-cells-16.10.0.jar</systemPath>
+        </dependency>
     </dependencies>
 
 
