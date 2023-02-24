@@ -6,14 +6,8 @@ import exception.MyException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
-import javax.tools.JavaCompiler;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.KeyFactory;
@@ -22,6 +16,8 @@ import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @name: BasicTest
@@ -266,6 +262,17 @@ public class BasicTest {
         System.out.println(JSON.toJSONString(student));
         AtomicInteger atomicInteger = new AtomicInteger(1);
         atomicInteger.getAndSet(1);
+    }
+
+    @Test
+    public void testRandom() {
+        List<Integer> list = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 1; i <= 10000; i++) {
+            list.add(random.nextInt(22));
+        }
+        Map<Integer,Long> randomMap = list.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        System.out.println(randomMap);
     }
 
 

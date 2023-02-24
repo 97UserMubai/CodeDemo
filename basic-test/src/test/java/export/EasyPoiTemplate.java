@@ -11,6 +11,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.junit.Test;
 
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -60,6 +61,40 @@ public class EasyPoiTemplate {
         FileOutputStream fos = new FileOutputStream("D:\\export\\phone_fault_template_" + System.currentTimeMillis() + ".xlsx");
         workbook.write(fos);
         fos.close();
+    }
+
+    /**
+     * 使用ExcelExportUtil.exportExcelClone(sheetMap, params);这个工具类进行多个sheet结果的模板导出
+     * 这个工具类的用法是：根据结果进行指定sheet位置的导出，但是有个问题是，这个模板的数据无法指定多个sheet
+     */
+    @Test
+    public void testCloneManySheet() throws Exception {
+        Map<Integer, List<Map<String, Object>>> sheetMap = new HashMap<>();
+        for (int i = 1; i <= 3; i++) {
+            sheetMap.put(i * 3 - 1, getCloneMap(i));
+        }
+        TemplateExportParams params = new TemplateExportParams("D:\\projects\\CodeDemo\\basic-test\\src\\main\\resources\\template\\export\\WBT自定义报表.xlsx");
+        Workbook workbook = ExcelExportUtil.exportExcelClone(sheetMap, params);
+        FileOutputStream fos = new FileOutputStream("D:\\export\\many_sheet_" + System.currentTimeMillis() + ".xlsx");
+        workbook.write(fos);
+        fos.close();
+    }
+
+    /**
+     * 获取统一的
+     *
+     * @param index index
+     * @return Map<String, Object>
+     */
+    private List<Map<String, Object>> getCloneMap(int index) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        map.put("B1D1628278085199470594I1539142773103087617V1T11:30", index);
+        map.put("B1D1628223729586544643I1539142773103087617V1T11:30", index);
+        map.put("B1D1628278085790867459I1539142773103087617V1T11:30", index);
+        map.put("reportDate", LocalDate.now().plusDays(1).toString());
+        list.add(map);
+        return list;
     }
 
     private Workbook getFaultBaseWorkBook() {
