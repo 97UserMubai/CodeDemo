@@ -6,11 +6,15 @@ import com.alibaba.fastjson.JSON;
 import com.aspose.cells.WorksheetCollection;
 import entity.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -72,7 +76,7 @@ public class EasyPoiTemplate {
     public void testCloneManySheet() throws Exception {
         Map<Integer, List<Map<String, Object>>> sheetMap = new HashMap<>();
         List<String> workbookPaths = new ArrayList<>();
-        TemplateExportParams params = new TemplateExportParams("D:\\projects\\CodeDemo\\basic-test\\src\\main\\resources\\template\\export\\WBT自定义报表2.xlsx");
+        TemplateExportParams params = new TemplateExportParams("D:\\projects\\CodeDemo\\basic-test\\src\\main\\resources\\template\\export\\WBT自定义报表2.xlsx", true);
         for (int i = 1; i <= 3; i++) {
             String fileName = "D:\\export\\many_sheet_" + System.currentTimeMillis() + ".xlsx";
             FileOutputStream fos = new FileOutputStream(fileName);
@@ -106,6 +110,9 @@ public class EasyPoiTemplate {
         //加工完成进行文件的存储
         String fileName = "D:\\export\\collector_sheet_" + System.currentTimeMillis() + ".xlsx";
         output.save(fileName);
+        Workbook workbook = new XSSFWorkbook(new FileInputStream(new File(fileName)));
+        workbook.removeSheetAt(index.get());
+        workbook.write(new FileOutputStream(fileName));
     }
 
     /**
@@ -125,7 +132,7 @@ public class EasyPoiTemplate {
         map.put("B1D1628278085199470594I1539142773103087617V1T11:30", index);
         map.put("B1D1628223729586544643I1539142773103087617V1T11:30", index);
         map.put("B1D1628278085790867459I1539142773103087617V1T11:30", index);
-        map.put("reportDate", LocalDate.now().plusDays(1).toString());
+        map.put("reportDate", LocalDate.now().plusDays(index).toString());
         return map;
     }
 

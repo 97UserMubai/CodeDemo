@@ -43,9 +43,6 @@ public class WeightedRandom {
         List<String> result = getResult(map, 10000);
         Map<String, Long> mapResult = result.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(mapResult);
-        //12 10 9 11 6  13
-        //恩科落落  西尔韦拉 卡明思 图梨奥 卡哇大 萨斯 克拉耶夫
-        // 5.45     6.0    1.78  3.47    3.45 9.6   5.3
     }
 
     class Bean {

@@ -1,11 +1,13 @@
 package basic;
 
+import cn.hutool.core.util.ZipUtil;
 import com.alibaba.fastjson.JSON;
 import es.entity.Student;
 import exception.MyException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -13,7 +15,11 @@ import java.math.RoundingMode;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -271,8 +277,83 @@ public class BasicTest {
         for (int i = 1; i <= 10000; i++) {
             list.add(random.nextInt(22));
         }
-        Map<Integer,Long> randomMap = list.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        Map<Integer, Long> randomMap = list.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         System.out.println(randomMap);
+    }
+
+    @Test
+    public void testCalc() {
+        System.out.println(true ^ true);
+        System.out.println(true ^ false);
+        System.out.println(false ^ true);
+        System.out.println(false ^ false);
+        System.out.println(Double.valueOf("1"));
+        System.out.println(Double.valueOf("0"));
+    }
+
+    /**
+     * redis update_time 字段的统一格式化format对象
+     */
+    private static final DateTimeFormatter UPDATE_TIME_FORMAT = new DateTimeFormatterBuilder().appendPattern("yyyyMMddHHmmssSSS")
+            .appendValue(ChronoField.MILLI_OF_SECOND, 3).toFormatter();
+    /**
+     * 更新时间结果格式化对象
+     */
+    private static final DateTimeFormatter UPDATE_TIME_CONVERT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    @Test
+    public void testConvertTime() {
+        System.out.println(UPDATE_TIME_CONVERT_FORMAT.format(LocalDateTime
+                .parse(String.valueOf(20230301120500167L), UPDATE_TIME_FORMAT)));
+    }
+
+    @Test
+    public void testContains() {
+        System.out.println("DCIM_SmartIOServer".toUpperCase().contains("DCIM_SmartIOServer".toUpperCase()));
+    }
+
+    @Test
+    public void testSub() {
+        String str = "{{B1Fsid-59D82F57-00FB-41AB-8782-AAEAF4DA19EFT11:30}}";
+        int typeIndex = str.indexOf("Fsid");
+        System.out.println(str.substring(typeIndex + 1, 46));
+
+        typeIndex = str.indexOf("{{B");
+
+        String value = str.substring(typeIndex + 3, typeIndex + 4);
+        System.out.println(value);
+    }
+
+    @Test
+    public void testContain() {
+        String str = "{{B1Fsid-59D82F57-00FB-41AB-8782-AAEAF4DA19EFT11:30}}";
+        String str2 = "{{B1-59D82F57-00FB-41AB-8782-AAEAF4DA19EFT11:30}}";
+        System.out.println(str.contains("Fsid"));
+        System.out.println(str2.contains("Fsid"));
+    }
+
+    @Test
+    public void testCollect() {
+        List<Student> list = new ArrayList<>();
+        Student student = new Student();
+        student.setId(1L);
+        list.add(student);
+        Student student2 = new Student();
+        student2.setId(1L);
+        student2.setName("22");
+        list.add(student2);
+        Map<Long, String> map = new HashMap<>();
+        list.forEach(item -> {
+
+        });
+        list.stream().collect(Collectors.toMap(Student::getId, Student::getName));
+        System.out.println("debug");
+    }
+
+    @Test
+    public void testZip() {
+        Workbook workbook =
+        ZipUtil.zip()
     }
 
 
